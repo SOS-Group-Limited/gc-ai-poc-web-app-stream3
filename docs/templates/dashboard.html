@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaw AI — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', Arial, sans-serif; background: #f4f4f4; color: #1a1a1a; display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar { width: 260px; background: #1a1a1a; color: #c1c5cb; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 10; }
+  .sidebar-logo { padding: 24px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .sidebar-logo .shield { width: 36px; height: 36px; background: #b12b35; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
+  .sidebar-logo .text { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 1px; line-height: 1.3; }
+  .sidebar-logo .text span { display: block; font-size: 10px; font-weight: 400; color: #9ca3af; letter-spacing: 0.5px; margin-top: 2px; }
+  .nav-section { padding: 16px 0; }
+  .nav-label { padding: 8px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #5d6567; }
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 0 20px; height: 44px; font-size: 14px; font-weight: 500; color: #c1c5cb; cursor: pointer; transition: background 150ms ease; position: relative; letter-spacing: 0.2px; text-decoration: none; }
+  .nav-item:hover { background: rgba(255,255,255,0.05); }
+  .nav-item.active { color: #fff; background: rgba(177,43,53,0.15); }
+  .nav-item.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #b12b35; }
+  .nav-icon { width: 18px; height: 18px; opacity: 0.7; }
+  .nav-item.active .nav-icon { opacity: 1; }
+
+  /* Main content */
+  .main { margin-left: 260px; flex: 1; }
+  .topbar { height: 56px; background: #fff; border-bottom: 1px solid #e3e3e3; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 5; }
+  .topbar-left { font-size: 14px; color: #5d6567; }
+  .topbar-left strong { color: #1a1a1a; font-weight: 600; }
+  .topbar-right { display: flex; align-items: center; gap: 16px; }
+  .notif-dot { width: 32px; height: 32px; border-radius: 50%; background: #f4f4f4; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; position: relative; }
+  .notif-dot .badge { position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; background: #b12b35; color: #fff; font-size: 9px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: #b12b35; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+
+  .content { padding: 32px; }
+
+  /* Project Header */
+  .project-header { margin-bottom: 32px; }
+  .project-header h1 { font-size: 28px; font-weight: 600; letter-spacing: 0.5px; }
+  .project-header .subtitle { font-size: 14px; color: #5d6567; margin-top: 4px; }
+  .project-header .status { display: inline-block; margin-top: 8px; padding: 4px 12px; background: #dcfce7; color: #166534; font-size: 12px; font-weight: 600; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Metrics Row */
+  .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 32px; }
+  .metric-card { background: #fff; border: 1px solid #e3e3e3; padding: 24px; }
+  .metric-card .value { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; color: #1a1a1a; }
+  .metric-card .value.red { color: #b12b35; }
+  .metric-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-top: 4px; }
+
+  /* Grid layout */
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+
+  /* Entity Cards */
+  .section-title { font-size: 16px; font-weight: 600; letter-spacing: 0.2px; margin-bottom: 16px; }
+  .entity-card { background: #fff; border: 1px solid #e3e3e3; padding: 24px; transition: box-shadow 200ms ease; cursor: pointer; }
+  .entity-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .entity-card .name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .entity-card .type { font-size: 12px; color: #9ca3af; margin-bottom: 16px; }
+  .entity-card .metric-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .entity-card .metric-row .k { font-size: 12px; color: #5d6567; }
+  .entity-card .metric-row .v { font-size: 12px; font-weight: 600; }
+  .entity-status { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 600; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 8px; }
+  .entity-status.on-track { background: #dcfce7; color: #166534; }
+  .entity-status.attention { background: #fef3c7; color: #92400e; }
+  .entity-status.critical { background: #fce4e6; color: #b12b35; }
+
+  /* Key Documents */
+  .doc-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #e3e3e3; }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-info { display: flex; align-items: center; gap: 12px; }
+  .doc-icon { width: 36px; height: 36px; background: #dcfce7; color: #166534; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+  .doc-icon.excel { background: #dcfce7; color: #166534; }
+  .doc-icon.pdf { background: #fce4e6; color: #b12b35; }
+  .doc-icon.word { background: #dbeafe; color: #2563eb; }
+  .doc-name { font-size: 13px; font-weight: 600; }
+  .doc-meta { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  .doc-status { padding: 3px 10px; font-size: 11px; font-weight: 600; border-radius: 2px; text-transform: uppercase; }
+  .doc-status.current { background: #dcfce7; color: #166534; }
+  .doc-status.review { background: #fef3c7; color: #92400e; }
+
+  /* Activity Feed */
+  .panel { background: #fff; border: 1px solid #e3e3e3; padding: 24px; }
+  .activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f4f4f4; }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .activity-dot.doc { background: #2563eb; }
+  .activity-dot.decision { background: #b12b35; }
+  .activity-dot.alert { background: #d97706; }
+  .activity-dot.task { background: #16a34a; }
+  .activity-text { font-size: 13px; color: #4b4b4b; line-height: 1.5; }
+  .activity-time { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+
+  /* Deadlines Widget */
+  .deadline-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f4f4f4; }
+  .deadline-item:last-child { border-bottom: none; }
+  .deadline-info .dl-title { font-size: 13px; font-weight: 500; }
+  .deadline-info .dl-entity { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  .dl-date { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 2px; }
+  .dl-date.ok { background: #dcfce7; color: #166534; }
+  .dl-date.warn { background: #fef3c7; color: #92400e; }
+  .dl-date.overdue { background: #fce4e6; color: #b12b35; }
+
+  .view-all { display: block; text-align: center; margin-top: 16px; font-size: 13px; font-weight: 500; color: #b12b35; text-decoration: none; }
+  .view-all:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="shield">G</div>
+      <div class="text">GAW CAPITAL<span>Asset Intelligence</span></div>
+    </div>
+    <nav class="nav-section">
+      <div class="nav-label">Portfolio</div>
+      <a class="nav-item active" href="dashboard.html"><span class="nav-icon">&#9638;</span> Dashboard</a>
+      <a class="nav-item" href="documents.html"><span class="nav-icon">&#128193;</span> Documents</a>
+      <a class="nav-item" href="monitoring.html"><span class="nav-icon">&#128276;</span> Monitoring</a>
+      <a class="nav-item" href="intelligence.html"><span class="nav-icon">&#10024;</span> Intelligence</a>
+      <a class="nav-item" href="tasks.html"><span class="nav-icon">&#9745;</span> Tasks</a>
+    </nav>
+    <nav class="nav-section" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.08);">
+      <a class="nav-item"><span class="nav-icon">&#9881;</span> Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left"><strong>Project Arts</strong> &mdash; Ballet</div>
+      <div class="topbar-right">
+        <div class="notif-dot">&#128276;<div class="badge">3</div></div>
+        <div class="avatar">JB</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Project Header -->
+      <div class="project-header">
+        <h1>Project Arts &mdash; Ballet</h1>
+        <div class="subtitle">Singapore Preschool Portfolio &middot; Gaw Capital Partners</div>
+        <div class="status">Active &mdash; Hold Year 3</div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="value">$25.0M</div>
+          <div class="label">Investment Amount</div>
+        </div>
+        <div class="metric-card">
+          <div class="value">$31.2M</div>
+          <div class="label">Current NAV</div>
+        </div>
+        <div class="metric-card">
+          <div class="value red">18.4%</div>
+          <div class="label">Projected IRR</div>
+        </div>
+        <div class="metric-card">
+          <div class="value">3.2 yrs</div>
+          <div class="label">Hold Period</div>
+        </div>
+      </div>
+
+      <!-- Entity Cards -->
+      <div class="section-title">Portfolio Entities</div>
+      <div class="grid-3">
+        <div class="entity-card">
+          <div class="name">SDM Childcare Centre (Jurong East)</div>
+          <div class="type">Childcare Centre &middot; Singapore</div>
+          <div class="metric-row"><span class="k">YTD Revenue</span><span class="v">S$1,493,672</span></div>
+          <div class="metric-row"><span class="k">Enrollment</span><span class="v">142 / 160</span></div>
+          <div class="metric-row"><span class="k">Last Updated</span><span class="v">May 10, 2026</span></div>
+          <div class="entity-status on-track">On Track</div>
+        </div>
+        <div class="entity-card">
+          <div class="name">Tinkerland Private Limited</div>
+          <div class="type">Preschool &middot; Singapore</div>
+          <div class="metric-row"><span class="k">YTD Revenue</span><span class="v">S$1,829,672</span></div>
+          <div class="metric-row"><span class="k">Enrollment</span><span class="v">165 / 180</span></div>
+          <div class="metric-row"><span class="k">Last Updated</span><span class="v">May 8, 2026</span></div>
+          <div class="entity-status on-track">On Track</div>
+        </div>
+        <div class="entity-card">
+          <div class="name">SDM International Pre-school</div>
+          <div class="type">International Preschool &middot; Singapore</div>
+          <div class="metric-row"><span class="k">YTD Revenue</span><span class="v">S$3,450,900</span></div>
+          <div class="metric-row"><span class="k">Enrollment</span><span class="v">198 / 220</span></div>
+          <div class="metric-row"><span class="k">Last Updated</span><span class="v">May 9, 2026</span></div>
+          <div class="entity-status attention">Attention</div>
+        </div>
+        <div class="entity-card">
+          <div class="name">Global Tots @ Mountbatten</div>
+          <div class="type">Childcare Centre &middot; Singapore</div>
+          <div class="metric-row"><span class="k">YTD Revenue</span><span class="v">S$1,670,550</span></div>
+          <div class="metric-row"><span class="k">Enrollment</span><span class="v">88 / 100</span></div>
+          <div class="metric-row"><span class="k">Last Updated</span><span class="v">May 6, 2026</span></div>
+          <div class="entity-status on-track">On Track</div>
+        </div>
+        <div class="entity-card">
+          <div class="name">Global Tots @ East Gate</div>
+          <div class="type">Childcare Centre &middot; Singapore</div>
+          <div class="metric-row"><span class="k">YTD Revenue</span><span class="v">S$892,340</span></div>
+          <div class="metric-row"><span class="k">Enrollment</span><span class="v">54 / 72</span></div>
+          <div class="metric-row"><span class="k">Last Updated</span><span class="v">Apr 28, 2026</span></div>
+          <div class="entity-status critical">March Report Overdue</div>
+        </div>
+        <div class="entity-card">
+          <div class="name">Sunflower Preschool</div>
+          <div class="type">Preschool &middot; Singapore</div>
+          <div class="metric-row"><span class="k">YTD Revenue</span><span class="v">S$2,104,800</span></div>
+          <div class="metric-row"><span class="k">Enrollment</span><span class="v">175 / 200</span></div>
+          <div class="metric-row"><span class="k">Last Updated</span><span class="v">May 5, 2026</span></div>
+          <div class="entity-status on-track">On Track</div>
+        </div>
+      </div>
+
+      <!-- Key Docs + Activity -->
+      <div class="grid-2">
+        <div class="panel">
+          <div class="section-title">Key Documents</div>
+          <div class="doc-row">
+            <div class="doc-info">
+              <div class="doc-icon excel">XLS</div>
+              <div><div class="doc-name">Ballet UW v5</div><div class="doc-meta">Apr 16, 2026 &middot; Lillian Chow &middot; 4,452 KB</div></div>
+            </div>
+            <div class="doc-status current">Confirmed</div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-info">
+              <div class="doc-icon excel">XLS</div>
+              <div><div class="doc-name">Ballet UW v4.8.6</div><div class="doc-meta">Apr 14, 2026 &middot; Capital Markets &middot; 2,898 KB</div></div>
+            </div>
+            <div class="doc-status current">Approved</div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-info">
+              <div class="doc-icon pdf">PDF</div>
+              <div><div class="doc-name">IC Memo (25Feb2026)</div><div class="doc-meta">Feb 25, 2026 &middot; Paul &middot; 502 KB</div></div>
+            </div>
+            <div class="doc-status current">Confirmed</div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-info">
+              <div class="doc-icon excel">XLS</div>
+              <div><div class="doc-name">GTEG Mgmt Accounts Dec 2025</div><div class="doc-meta">Mar 30, 2026 &middot; Sharon Chan &middot; 89 KB</div></div>
+            </div>
+            <div class="doc-status review">Under Review</div>
+          </div>
+          <a href="documents.html" class="view-all">View all documents &rarr;</a>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom: 24px;">
+            <div class="section-title">Upcoming Deadlines</div>
+            <div class="deadline-item">
+              <div class="deadline-info"><div class="dl-title">Apr Management Report</div><div class="dl-entity">Global Tots East Gate</div></div>
+              <div class="dl-date overdue">Overdue</div>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-info"><div class="dl-title">Apr Management Report</div><div class="dl-entity">Sunflower Preschool</div></div>
+              <div class="dl-date warn">May 14</div>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-info"><div class="dl-title">Q1 Audit Report</div><div class="dl-entity">All Entities</div></div>
+              <div class="dl-date ok">May 20</div>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-info"><div class="dl-title">Capex Forecast</div><div class="dl-entity">Portfolio</div></div>
+              <div class="dl-date ok">May 25</div>
+            </div>
+            <a href="monitoring.html" class="view-all">View all &rarr;</a>
+          </div>
+
+          <div class="panel">
+            <div class="section-title">Recent Activity</div>
+            <div class="activity-item">
+              <div class="activity-dot doc"></div>
+              <div><div class="activity-text">UW Model v5 uploaded by Lillian Chow</div><div class="activity-time">Apr 16, 2026</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot alert"></div>
+              <div><div class="activity-text">March report overdue &mdash; Global Tots East Gate</div><div class="activity-time">Apr 10, 2026</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot decision"></div>
+              <div><div class="activity-text">IC Memo approved by Investment Committee</div><div class="activity-time">Feb 25, 2026</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot task"></div>
+              <div><div class="activity-text">Budget V2 submitted for review</div><div class="activity-time">Nov 10, 2025</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
