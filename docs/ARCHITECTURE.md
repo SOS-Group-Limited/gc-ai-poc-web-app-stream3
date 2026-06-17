@@ -50,6 +50,7 @@ No real auth system. Simple password gate:
 - The login screen doubles as a branded landing page
 
 **Implementation:**
+
 - `app/login/page.tsx` — password input + branding
 - `lib/auth.ts` — `isAuthenticated()` check (reads localStorage)
 - `components/shared/AuthGate.tsx` — wrapper component that redirects if not authed
@@ -60,11 +61,13 @@ No real auth system. Simple password gate:
 ## 3. App Shell & Navigation
 
 ### Layout
+
 - **Sidebar** (left, collapsible): primary navigation
 - **Top bar**: project selector (future: switch between projects), user avatar placeholder, notifications bell
 - **Main content area**: full width, scrollable
 
 ### Sidebar Navigation Items
+
 ```
 [Logo: Gaw Asset Intelligence]
 
@@ -77,6 +80,7 @@ No real auth system. Simple password gate:
 ```
 
 ### Responsive Behavior
+
 - Desktop: sidebar always visible
 - Tablet: sidebar collapsible
 - Mobile: bottom nav or hamburger (low priority for demo)
@@ -92,6 +96,7 @@ No real auth system. Simple password gate:
 #### Components:
 
 **A. Project Header**
+
 - Project name: "Project Arts — Ballet"
 - Description: "Singapore Preschool Portfolio"
 - Status badge: "Active — Hold Year 3"
@@ -99,6 +104,7 @@ No real auth system. Simple password gate:
 
 **B. Entity Overview Cards** (grid of 4-6 cards)
 Each card represents a portfolio entity:
+
 - Entity name (e.g., "Global Tots East Gate")
 - Revenue (latest month or YTD)
 - Enrollment/occupancy metric
@@ -107,6 +113,7 @@ Each card represents a portfolio entity:
 - Click → opens entity detail (future, not in MVP)
 
 Entities to seed:
+
 1. SDM Childcare Centre (Jurong East)
 2. Tinkerland
 3. SDM Ichiban Preschool
@@ -115,6 +122,7 @@ Entities to seed:
 6. Global Tots @ Mountbatten
 
 **C. Key Documents Panel**
+
 - Shows 3-5 most important documents with:
   - Document name + version badge (e.g., "UW Model v5")
   - Status: "Confirmed Current" / "Draft" / "Under Review"
@@ -123,6 +131,7 @@ Entities to seed:
 - "View all documents →" link to Documents screen
 
 **D. Recent Activity Feed** (right side or below)
+
 - Timeline of recent events:
   - "UW Model v5 uploaded by Lillian Chow — Apr 16"
   - "March Management Report received from Global Tots East Gate — Apr 8"
@@ -131,6 +140,7 @@ Entities to seed:
 - Filterable by category (Documents, Decisions, Tasks, Communications)
 
 **E. Upcoming Deadlines Widget**
+
 - Next 5 upcoming deadlines
 - Color-coded: green (on track), yellow (approaching), red (overdue)
 - Links to Monitoring screen
@@ -144,6 +154,7 @@ Entities to seed:
 #### Components:
 
 **A. Folder Browser** (left panel, ~30% width)
+
 - Tree view mirroring Ballet Drive structure:
   ```
   📁 01 Investment
@@ -171,6 +182,7 @@ Entities to seed:
 - Click folder → shows contents in right panel
 
 **B. File List** (right panel, ~70% width)
+
 - Table view of files in selected folder:
   - Name | Version | Status | Modified | Modified By | Size
 - Status badges: Current, Draft, Archived, Under Review
@@ -178,6 +190,7 @@ Entities to seed:
 - Search/filter bar at top
 
 **C. Document Detail Modal** (on file click)
+
 - Document metadata: name, type, size, created date
 - **Version history timeline**: shows all versions with date, author, status
 - **Version confirmation**: "Is this the latest version?" with confirm/deny buttons
@@ -185,6 +198,7 @@ Entities to seed:
 - Download button (simulated)
 
 **D. Version Control Banner**
+
 - At top of file list, when a document has a confirmed-current version:
   - "✓ UW Model v5 — Confirmed current as of Apr 16, 2026 by Lillian Chow"
 - When overdue for confirmation:
@@ -199,6 +213,7 @@ Entities to seed:
 #### Components:
 
 **A. File Tracker Matrix** (main content, full width)
+
 - Table layout:
   - Rows: document types that are expected regularly (Monthly Management Report, Monthly Cashflow, Bank Statements, GST Filing, Payroll Summary)
   - Sub-rows: per entity (Global Tots East Gate, Tinkerland, SDM Childcare, etc.)
@@ -208,6 +223,7 @@ Entities to seed:
 - Sticky first column (document name) and header row (months)
 
 **B. Deadline Panel** (right sidebar or below matrix)
+
 - Upcoming deadlines in next 30 days:
   - "Apr Management Report — Global Tots East Gate — Due May 7"
   - "Q1 2026 Audit Report — All entities — Due May 15"
@@ -216,6 +232,7 @@ Entities to seed:
 - Assignee shown
 
 **C. Alert Log** (expandable section below)
+
 - History of alerts sent:
   - "May 8 — Alert: March Management Report from Global Tots East Gate is 5 days overdue. Notification sent to AM team."
   - "May 3 — Reminder: March Management Report due from Global Tots East Gate in 4 days."
@@ -223,6 +240,7 @@ Entities to seed:
 - Filter by entity, alert type, date range
 
 **D. Automation Rules Panel** (collapsible)
+
 - Shows configured rules:
   - "Collect Monthly Management Report from all entities by 7th of each month"
   - "Collect Bank Statements from all entities by 10th of each month"
@@ -238,6 +256,7 @@ Entities to seed:
 #### Components:
 
 **A. Chat Interface** (main content, ~65% width)
+
 - Message input at bottom with send button
 - Chat history with user/AI message bubbles
 - AI responses include:
@@ -247,6 +266,7 @@ Entities to seed:
   - Action suggestions ("Would you like me to schedule a quarterly update?")
 
 **Pre-seeded conversations / suggested prompts:**
+
 1. "What's the current projected IRR for Project Arts?"
 2. "Summarize the financial performance of Global Tots East Gate for 2025"
 3. "Which management reports are overdue this month?"
@@ -255,6 +275,7 @@ Entities to seed:
 6. "Prepare an executive summary of Project Arts for the MP briefing"
 
 **B. Research Panel** (right sidebar, ~35% width)
+
 - **Saved Insights**: pre-generated research cards
   - "Singapore Childcare Market Overview — Q1 2026"
   - "Competitor Analysis: Major Pre-school Operators in SG"
@@ -265,6 +286,7 @@ Entities to seed:
   - "Monthly: Competitor pricing changes" — Next run: Jun 2026
 
 **C. Context Indicator** (top of chat)
+
 - Shows what data the AI has access to:
   - "Connected to: Project Arts — Ballet"
   - "Data sources: UW Model v5, Management Accounts (Dec 2025), Monitoring Data"
@@ -279,6 +301,7 @@ Entities to seed:
 #### Components:
 
 **A. Task Board** (Kanban-style or list view, toggleable)
+
 - Columns: To Do | In Progress | Blocked | Done
 - Each task card shows:
   - Title
@@ -289,17 +312,20 @@ Entities to seed:
   - Source badge: "Planned" (blue) or "Ad-hoc" (orange)
 
 **B. Quick Add** (top bar)
+
 - "Add task" button opens modal with:
   - Title, description, due date, assignee, category, priority
   - Explicit "Planned vs Ad-hoc" toggle
 
 **C. Workload View** (secondary tab)
+
 - Shows current task load per team member
 - When an ad-hoc task is added, highlights the impact:
   - "Adding this task will push [other task] past its deadline. Proceed?"
 - This is the deliberate prioritization the prompt doc describes
 
 **Seeded tasks:**
+
 - P1: Finalize UW Model v5 for Capital Markets submission (Planned, Due May 15)
 - P1: Review March Management Accounts — all entities (Planned, Due May 10)
 - P2: Prepare Q1 Investor Report (Planned, Due May 30)
@@ -317,10 +343,10 @@ Entities to seed:
 // Project
 interface Project {
   id: string;
-  name: string;           // "Project Arts — Ballet"
-  description: string;    // "Singapore Preschool Portfolio"
+  name: string; // "Project Arts — Ballet"
+  description: string; // "Singapore Preschool Portfolio"
   status: "active" | "closing" | "exited";
-  holdPeriod: number;     // years
+  holdPeriod: number; // years
   investmentAmount: number;
   currency: string;
   currentNAV: number;
@@ -331,28 +357,28 @@ interface Project {
 // Portfolio Entity
 interface Entity {
   id: string;
-  name: string;           // "Global Tots @ East Gate"
-  type: string;           // "childcare_centre"
-  location: string;       // "Singapore"
+  name: string; // "Global Tots @ East Gate"
+  type: string; // "childcare_centre"
+  location: string; // "Singapore"
   status: "on_track" | "attention" | "critical";
   revenue: { ytd: number; lastMonth: number };
   enrollment: { current: number; capacity: number };
-  lastUpdated: string;    // ISO date
+  lastUpdated: string; // ISO date
 }
 
 // Folder / File Structure
 interface Folder {
   id: string;
-  name: string;           // "02 Model & Budget"
+  name: string; // "02 Model & Budget"
   parentId: string | null;
   children: (Folder | Document)[];
 }
 
 interface Document {
   id: string;
-  name: string;           // "Ballet UW v5"
+  name: string; // "Ballet UW v5"
   type: "excel" | "pdf" | "word" | "powerpoint";
-  size: string;           // "4,452 KB"
+  size: string; // "4,452 KB"
   currentVersion: string; // "v5"
   status: "current" | "draft" | "under_review" | "archived";
   confirmedBy: string | null;
@@ -373,10 +399,10 @@ interface DocumentVersion {
 // Monitoring
 interface MonitoringRule {
   id: string;
-  documentType: string;   // "Monthly Management Report"
-  entities: string[];     // which entities must submit
+  documentType: string; // "Monthly Management Report"
+  entities: string[]; // which entities must submit
   frequency: "monthly" | "quarterly" | "annual";
-  dueDay: number;         // day of month/quarter
+  dueDay: number; // day of month/quarter
   reminderDays: number[]; // days before due to remind
 }
 
@@ -384,7 +410,7 @@ interface SubmissionRecord {
   id: string;
   ruleId: string;
   entityId: string;
-  period: string;         // "2025-12" or "Q1-2026"
+  period: string; // "2025-12" or "Q1-2026"
   status: "received" | "pending" | "overdue";
   receivedAt: string | null;
   receivedFrom: string | null;
@@ -435,7 +461,7 @@ interface ChatMessage {
   role: "user" | "assistant";
   content: string;
   timestamp: string;
-  sources?: string[];     // document references cited
+  sources?: string[]; // document references cited
 }
 
 interface SavedInsight {
@@ -576,6 +602,7 @@ gaw-hack/
 ## 8. Build Order (Priority Sequence)
 
 ### Phase 1: Foundation (Day 1, first half)
+
 1. `npx create-next-app` with TypeScript, Tailwind, App Router
 2. Install shadcn/ui, set up theme
 3. Auth gate (login page + AuthGate wrapper)
@@ -583,22 +610,26 @@ gaw-hack/
 5. TypeScript types (`lib/types.ts`)
 
 ### Phase 2: Data + Dashboard (Day 1, second half)
+
 6. Seed data files (all JSON)
 7. API routes
 8. Dashboard page with all components
 
 ### Phase 3: Documents + Monitoring (Day 2, first half)
+
 9. Folder browser + file list
 10. Document detail modal with version history
 11. Monitoring matrix
 12. Deadline panel + alert log
 
 ### Phase 4: Intelligence + Tasks (Day 2, second half)
+
 13. Chat interface with pre-seeded responses
 14. Research panel with insight cards
 15. Task board (kanban view)
 
 ### Phase 5: Polish (Day 3)
+
 16. Animations and transitions
 17. Mobile responsiveness (basic)
 18. Demo data tuning
@@ -610,6 +641,7 @@ gaw-hack/
 ## 9. Demo Password
 
 For the demo account, we use a simple approach:
+
 - Password: configured via `NEXT_PUBLIC_DEMO_PASSWORD` env var
 - The login page shows the Gaw-branded splash with a single password field
 - Once entered correctly, user gets full access to all screens
@@ -619,15 +651,15 @@ For the demo account, we use a simple approach:
 
 ## 10. Key Design Decisions
 
-| Decision | Rationale |
-|----------|-----------|
-| No database | Self-contained demo, zero infrastructure, instant deploys |
-| JSON seed data | Easy for interns to edit and extend |
-| Pre-seeded AI responses | Reliable demo — no API keys needed, no hallucination risk |
-| shadcn/ui | Professional components, consistent design, fast to build |
-| 5 screens not 3 | Separating Documents and Tasks from Dashboard gives each pain point room to breathe |
-| Password gate not auth | Minimum viable access control for demo viewers |
-| Client-side state | No server state management complexity |
+| Decision                | Rationale                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------- |
+| No database             | Self-contained demo, zero infrastructure, instant deploys                           |
+| JSON seed data          | Easy for interns to edit and extend                                                 |
+| Pre-seeded AI responses | Reliable demo — no API keys needed, no hallucination risk                           |
+| shadcn/ui               | Professional components, consistent design, fast to build                           |
+| 5 screens not 3         | Separating Documents and Tasks from Dashboard gives each pain point room to breathe |
+| Password gate not auth  | Minimum viable access control for demo viewers                                      |
+| Client-side state       | No server state management complexity                                               |
 
 ---
 
@@ -646,44 +678,49 @@ JSON seed data ──→ UI               OneDrive/SharePoint ──→ Microsof
 
 ### Microsoft Graph API Integration Points
 
-| Feature | Graph API Endpoint | What It Enables |
-|---------|-------------------|-----------------|
-| **Folder browsing** | `/drives/{id}/root/children` | Real-time folder tree from the actual Ballet Drive |
-| **File metadata** | `/drives/{id}/items/{id}` | Name, size, modified date, modified by — live data |
-| **Version history** | `/drives/{id}/items/{id}/versions` | Real version timeline, not manually tracked |
-| **File change webhooks** | `/subscriptions` | Real-time notifications when files are uploaded/changed |
-| **Email monitoring** | `/users/{id}/messages` | Detect when portfolio companies send reports via email |
-| **Email attachments** | `/messages/{id}/attachments` | Auto-extract attachments and match to expected submissions |
-| **User profiles** | `/users` | Real team member names, avatars, roles |
-| **Calendar/deadlines** | `/users/{id}/calendar/events` | Sync deadlines with Outlook calendars |
+| Feature                  | Graph API Endpoint                 | What It Enables                                            |
+| ------------------------ | ---------------------------------- | ---------------------------------------------------------- |
+| **Folder browsing**      | `/drives/{id}/root/children`       | Real-time folder tree from the actual Ballet Drive         |
+| **File metadata**        | `/drives/{id}/items/{id}`          | Name, size, modified date, modified by — live data         |
+| **Version history**      | `/drives/{id}/items/{id}/versions` | Real version timeline, not manually tracked                |
+| **File change webhooks** | `/subscriptions`                   | Real-time notifications when files are uploaded/changed    |
+| **Email monitoring**     | `/users/{id}/messages`             | Detect when portfolio companies send reports via email     |
+| **Email attachments**    | `/messages/{id}/attachments`       | Auto-extract attachments and match to expected submissions |
+| **User profiles**        | `/users`                           | Real team member names, avatars, roles                     |
+| **Calendar/deadlines**   | `/users/{id}/calendar/events`      | Sync deadlines with Outlook calendars                      |
 
 ### Integration Layers (Build Order for Production)
 
 **Layer 1: Read-only file mirror (Week 1-2)**
+
 - Connect to OneDrive via Microsoft Graph
 - Mirror the folder structure in real-time
 - Display actual file metadata (replaces seed data)
 - No write operations — purely observational
 
 **Layer 2: Smart file classification (Week 2-3)**
+
 - Watch for new files via Graph webhooks
 - Auto-classify by document type based on folder location + filename patterns
 - Detect version sequences (e.g., "UW v4" → "UW v4.1" → "UW v5")
 - Learn the taxonomy from historical closed deals (as described in the prompt doc)
 
 **Layer 3: Email integration (Week 3-4)**
+
 - Monitor incoming emails for expected submissions
 - Match attachments to monitoring rules (e.g., "Monthly Management Report from Sharon Chan")
 - Auto-file to correct OneDrive folder
 - Update submission tracker automatically
 
 **Layer 4: Alert system (Week 4-5)**
+
 - Deadline engine based on monitoring rules
 - Internal notifications (in-app + email)
 - Escalation logic (reminder → overdue → escalated)
 - Integration with Outlook calendar for deadline visibility
 
 **Layer 5: AI layer (Week 5-6)**
+
 - RAG pipeline over the actual project documents
 - Parse Excel files (UW models, management accounts) for structured data extraction
 - Connect to external market data APIs
@@ -691,18 +728,19 @@ JSON seed data ──→ UI               OneDrive/SharePoint ──→ Microsof
 
 ### Infrastructure Requirements for Production
 
-| Component | Purpose | Options |
-|-----------|---------|---------|
-| **Auth** | Microsoft SSO via Azure AD | MSAL.js + Azure AD app registration |
-| **Database** | Store metadata, monitoring rules, tasks, alerts | PostgreSQL (Vercel Marketplace) |
-| **File processing** | Parse Excel/PDF for data extraction | Python serverless functions or dedicated service |
-| **Background jobs** | Webhook handlers, scheduled deadline checks, email polling | Vercel Crons + Queues |
-| **AI inference** | Chat, document analysis, research | Claude API via Vercel AI Gateway |
-| **Caching** | File metadata cache, reduce Graph API calls | Redis (Vercel Marketplace) |
+| Component           | Purpose                                                    | Options                                          |
+| ------------------- | ---------------------------------------------------------- | ------------------------------------------------ |
+| **Auth**            | Microsoft SSO via Azure AD                                 | MSAL.js + Azure AD app registration              |
+| **Database**        | Store metadata, monitoring rules, tasks, alerts            | PostgreSQL (Vercel Marketplace)                  |
+| **File processing** | Parse Excel/PDF for data extraction                        | Python serverless functions or dedicated service |
+| **Background jobs** | Webhook handlers, scheduled deadline checks, email polling | Vercel Crons + Queues                            |
+| **AI inference**    | Chat, document analysis, research                          | Claude API via Vercel AI Gateway                 |
+| **Caching**         | File metadata cache, reduce Graph API calls                | Redis (Vercel Marketplace)                       |
 
 ### Key Architectural Decision: Wrapper, Not Repository
 
 The tool should **never become the canonical location for files**. Files stay in OneDrive. The tool:
+
 - Reads from OneDrive (source of truth for documents)
 - Writes metadata to its own database (monitoring status, version confirmations, tasks, decisions)
 - Sends notifications via Outlook (alerts, reminders)
@@ -713,6 +751,7 @@ This means adoption is zero-friction: the team keeps working exactly as they do 
 ### Azure AD App Registration Requirements
 
 To access Microsoft Graph API, the production app needs:
+
 - Azure AD app registration in Gaw Capital's tenant
 - Delegated permissions: `Files.Read.All`, `Mail.Read`, `Calendars.Read`, `User.Read.All`
 - Admin consent from Gaw IT

@@ -1,300 +1,801 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaw AI — Documents</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Montserrat', Arial, sans-serif; background: #f4f4f4; color: #1a1a1a; display: flex; min-height: 100vh; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gaw AI — Documents</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", Arial, sans-serif;
+        background: #f4f4f4;
+        color: #1a1a1a;
+        display: flex;
+        min-height: 100vh;
+      }
 
-  .sidebar { width: 260px; background: #1a1a1a; color: #c1c5cb; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 10; }
-  .sidebar-logo { padding: 24px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .sidebar-logo .shield { width: 36px; height: 36px; background: #b12b35; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
-  .sidebar-logo .text { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 1px; line-height: 1.3; }
-  .sidebar-logo .text span { display: block; font-size: 10px; font-weight: 400; color: #9ca3af; letter-spacing: 0.5px; margin-top: 2px; }
-  .nav-section { padding: 16px 0; }
-  .nav-label { padding: 8px 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #5d6567; }
-  .nav-item { display: flex; align-items: center; gap: 12px; padding: 0 20px; height: 44px; font-size: 14px; font-weight: 500; color: #c1c5cb; cursor: pointer; transition: background 150ms; position: relative; text-decoration: none; }
-  .nav-item:hover { background: rgba(255,255,255,0.05); }
-  .nav-item.active { color: #fff; background: rgba(177,43,53,0.15); }
-  .nav-item.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #b12b35; }
+      .sidebar {
+        width: 260px;
+        background: #1a1a1a;
+        color: #c1c5cb;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+      }
+      .sidebar-logo {
+        padding: 24px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .sidebar-logo .shield {
+        width: 36px;
+        height: 36px;
+        background: #b12b35;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .sidebar-logo .text {
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: 1px;
+        line-height: 1.3;
+      }
+      .sidebar-logo .text span {
+        display: block;
+        font-size: 10px;
+        font-weight: 400;
+        color: #9ca3af;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+      }
+      .nav-section {
+        padding: 16px 0;
+      }
+      .nav-label {
+        padding: 8px 20px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #5d6567;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 20px;
+        height: 44px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #c1c5cb;
+        cursor: pointer;
+        transition: background 150ms;
+        position: relative;
+        text-decoration: none;
+      }
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .nav-item.active {
+        color: #fff;
+        background: rgba(177, 43, 53, 0.15);
+      }
+      .nav-item.active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: #b12b35;
+      }
 
-  .main { margin-left: 260px; flex: 1; }
-  .topbar { height: 56px; background: #fff; border-bottom: 1px solid #e3e3e3; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 5; }
-  .topbar-left { font-size: 14px; color: #5d6567; }
-  .topbar-left strong { color: #1a1a1a; font-weight: 600; }
-  .topbar-right { display: flex; align-items: center; gap: 16px; }
-  .avatar { width: 32px; height: 32px; border-radius: 50%; background: #b12b35; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+      .main {
+        margin-left: 260px;
+        flex: 1;
+      }
+      .topbar {
+        height: 56px;
+        background: #fff;
+        border-bottom: 1px solid #e3e3e3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+      .topbar-left {
+        font-size: 14px;
+        color: #5d6567;
+      }
+      .topbar-left strong {
+        color: #1a1a1a;
+        font-weight: 600;
+      }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #b12b35;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
 
-  .content { padding: 32px; display: flex; gap: 24px; height: calc(100vh - 56px); }
+      .content {
+        padding: 32px;
+        display: flex;
+        gap: 24px;
+        height: calc(100vh - 56px);
+      }
 
-  /* Folder Tree */
-  .folder-panel { width: 300px; background: #fff; border: 1px solid #e3e3e3; padding: 20px; overflow-y: auto; flex-shrink: 0; }
-  .folder-panel h2 { font-size: 14px; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.2px; }
-  .search-box { width: 100%; padding: 8px 12px; border: 1.5px solid #c1c5cb; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 13px; margin-bottom: 16px; outline: none; }
-  .search-box:focus { border-color: #b12b35; }
-  .folder-tree { list-style: none; }
-  .folder-tree li { padding: 6px 0; }
-  .folder-tree .folder { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 400; color: #4b4b4b; cursor: pointer; padding: 4px 8px; border-radius: 0; transition: background 100ms; }
-  .folder-tree .folder:hover { background: #f4f4f4; }
-  .folder-tree .folder.active { background: rgba(177,43,53,0.08); color: #b12b35; font-weight: 600; }
-  .folder-tree .folder .icon { color: #d97706; font-size: 14px; }
-  .folder-tree .folder .chevron { color: #9ca3af; font-size: 10px; margin-right: 4px; }
-  .folder-tree .sub { list-style: none; padding-left: 28px; }
+      /* Folder Tree */
+      .folder-panel {
+        width: 300px;
+        background: #fff;
+        border: 1px solid #e3e3e3;
+        padding: 20px;
+        overflow-y: auto;
+        flex-shrink: 0;
+      }
+      .folder-panel h2 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        letter-spacing: 0.2px;
+      }
+      .search-box {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1.5px solid #c1c5cb;
+        border-radius: 2px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        margin-bottom: 16px;
+        outline: none;
+      }
+      .search-box:focus {
+        border-color: #b12b35;
+      }
+      .folder-tree {
+        list-style: none;
+      }
+      .folder-tree li {
+        padding: 6px 0;
+      }
+      .folder-tree .folder {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 400;
+        color: #4b4b4b;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 0;
+        transition: background 100ms;
+      }
+      .folder-tree .folder:hover {
+        background: #f4f4f4;
+      }
+      .folder-tree .folder.active {
+        background: rgba(177, 43, 53, 0.08);
+        color: #b12b35;
+        font-weight: 600;
+      }
+      .folder-tree .folder .icon {
+        color: #d97706;
+        font-size: 14px;
+      }
+      .folder-tree .folder .chevron {
+        color: #9ca3af;
+        font-size: 10px;
+        margin-right: 4px;
+      }
+      .folder-tree .sub {
+        list-style: none;
+        padding-left: 28px;
+      }
 
-  /* File List */
-  .file-panel { flex: 1; background: #fff; border: 1px solid #e3e3e3; overflow-y: auto; display: flex; flex-direction: column; }
-  .file-header { padding: 20px 24px; border-bottom: 1px solid #e3e3e3; }
-  .file-header h2 { font-size: 16px; font-weight: 600; }
-  .file-header .breadcrumb { font-size: 12px; color: #9ca3af; margin-top: 4px; }
-  .version-banner { margin: 16px 24px 0; padding: 12px 16px; background: #dcfce7; border-left: 3px solid #16a34a; font-size: 13px; color: #166534; display: flex; align-items: center; gap: 8px; }
-  .version-banner .check { font-weight: 700; }
+      /* File List */
+      .file-panel {
+        flex: 1;
+        background: #fff;
+        border: 1px solid #e3e3e3;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .file-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #e3e3e3;
+      }
+      .file-header h2 {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .file-header .breadcrumb {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: 4px;
+      }
+      .version-banner {
+        margin: 16px 24px 0;
+        padding: 12px 16px;
+        background: #dcfce7;
+        border-left: 3px solid #16a34a;
+        font-size: 13px;
+        color: #166534;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .version-banner .check {
+        font-weight: 700;
+      }
 
-  .file-table { width: 100%; border-collapse: collapse; }
-  .file-table thead th { padding: 10px 16px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #5d6567; background: #f4f4f4; text-align: left; border-bottom: 1px solid #e3e3e3; position: sticky; top: 0; }
-  .file-table tbody td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid #e3e3e3; }
-  .file-table tbody tr:hover { background: #f4f4f4; cursor: pointer; }
-  .file-table .fname { display: flex; align-items: center; gap: 10px; font-weight: 500; }
-  .file-table .ficon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
-  .ficon.xls { background: #dcfce7; color: #166534; }
-  .ficon.pdf { background: #fce4e6; color: #b12b35; }
-  .ficon.doc { background: #dbeafe; color: #2563eb; }
-  .ficon.ppt { background: #ffedd5; color: #9a3412; }
-  .fstatus { padding: 2px 8px; font-size: 11px; font-weight: 600; border-radius: 2px; text-transform: uppercase; }
-  .fstatus.current { background: #dcfce7; color: #166534; }
-  .fstatus.superseded { background: #e3e3e3; color: #5d6567; }
-  .fstatus.draft { background: #fef3c7; color: #92400e; }
-  .fstatus.approved { background: #dbeafe; color: #1e40af; }
+      .file-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .file-table thead th {
+        padding: 10px 16px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #5d6567;
+        background: #f4f4f4;
+        text-align: left;
+        border-bottom: 1px solid #e3e3e3;
+        position: sticky;
+        top: 0;
+      }
+      .file-table tbody td {
+        padding: 12px 16px;
+        font-size: 13px;
+        border-bottom: 1px solid #e3e3e3;
+      }
+      .file-table tbody tr:hover {
+        background: #f4f4f4;
+        cursor: pointer;
+      }
+      .file-table .fname {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+      }
+      .file-table .ficon {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .ficon.xls {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .ficon.pdf {
+        background: #fce4e6;
+        color: #b12b35;
+      }
+      .ficon.doc {
+        background: #dbeafe;
+        color: #2563eb;
+      }
+      .ficon.ppt {
+        background: #ffedd5;
+        color: #9a3412;
+      }
+      .fstatus {
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 2px;
+        text-transform: uppercase;
+      }
+      .fstatus.current {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .fstatus.superseded {
+        background: #e3e3e3;
+        color: #5d6567;
+      }
+      .fstatus.draft {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .fstatus.approved {
+        background: #dbeafe;
+        color: #1e40af;
+      }
 
-  /* Detail sidebar */
-  .detail-panel { width: 340px; background: #fff; border: 1px solid #e3e3e3; padding: 24px; overflow-y: auto; flex-shrink: 0; }
-  .detail-panel h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-  .detail-panel .detail-meta { font-size: 12px; color: #9ca3af; margin-bottom: 20px; }
-  .detail-section { margin-bottom: 20px; }
-  .detail-section .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #9ca3af; margin-bottom: 8px; }
-  .version-timeline { position: relative; padding-left: 20px; }
-  .version-timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: #e3e3e3; }
-  .vt-item { position: relative; padding: 8px 0; }
-  .vt-item::before { content: ''; position: absolute; left: -17px; top: 12px; width: 10px; height: 10px; border-radius: 50%; background: #c1c5cb; border: 2px solid #fff; }
-  .vt-item.current::before { background: #b12b35; }
-  .vt-item .vt-ver { font-size: 13px; font-weight: 600; }
-  .vt-item .vt-meta { font-size: 11px; color: #9ca3af; margin-top: 2px; }
-  .confirm-bar { padding: 12px 16px; background: #f4f4f4; border: 1px solid #e3e3e3; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
-  .confirm-bar .q { font-size: 13px; font-weight: 500; }
-  .confirm-btns { display: flex; gap: 8px; }
-  .btn-yes { padding: 6px 16px; background: #16a34a; color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 2px; }
-  .btn-no { padding: 6px 16px; background: transparent; color: #5d6567; border: 1.5px solid #c1c5cb; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 2px; }
-</style>
-</head>
-<body>
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="shield">G</div>
-      <div class="text">GAW CAPITAL<span>Asset Intelligence</span></div>
-    </div>
-    <nav class="nav-section">
-      <div class="nav-label">Portfolio</div>
-      <a class="nav-item" href="dashboard.html">&#9638; Dashboard</a>
-      <a class="nav-item active" href="documents.html">&#128193; Documents</a>
-      <a class="nav-item" href="monitoring.html">&#128276; Monitoring</a>
-      <a class="nav-item" href="intelligence.html">&#10024; Intelligence</a>
-      <a class="nav-item" href="tasks.html">&#9745; Tasks</a>
-    </nav>
-  </aside>
+      /* Detail sidebar */
+      .detail-panel {
+        width: 340px;
+        background: #fff;
+        border: 1px solid #e3e3e3;
+        padding: 24px;
+        overflow-y: auto;
+        flex-shrink: 0;
+      }
+      .detail-panel h3 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .detail-panel .detail-meta {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-bottom: 20px;
+      }
+      .detail-section {
+        margin-bottom: 20px;
+      }
+      .detail-section .label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #9ca3af;
+        margin-bottom: 8px;
+      }
+      .version-timeline {
+        position: relative;
+        padding-left: 20px;
+      }
+      .version-timeline::before {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        background: #e3e3e3;
+      }
+      .vt-item {
+        position: relative;
+        padding: 8px 0;
+      }
+      .vt-item::before {
+        content: "";
+        position: absolute;
+        left: -17px;
+        top: 12px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #c1c5cb;
+        border: 2px solid #fff;
+      }
+      .vt-item.current::before {
+        background: #b12b35;
+      }
+      .vt-item .vt-ver {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .vt-item .vt-meta {
+        font-size: 11px;
+        color: #9ca3af;
+        margin-top: 2px;
+      }
+      .confirm-bar {
+        padding: 12px 16px;
+        background: #f4f4f4;
+        border: 1px solid #e3e3e3;
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .confirm-bar .q {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 8px;
+      }
+      .btn-yes {
+        padding: 6px 16px;
+        background: #16a34a;
+        color: #fff;
+        border: none;
+        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 2px;
+      }
+      .btn-no {
+        padding: 6px 16px;
+        background: transparent;
+        color: #5d6567;
+        border: 1.5px solid #c1c5cb;
+        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="shield">G</div>
+        <div class="text">GAW CAPITAL<span>Asset Intelligence</span></div>
+      </div>
+      <nav class="nav-section">
+        <div class="nav-label">Portfolio</div>
+        <a class="nav-item" href="dashboard.html">&#9638; Dashboard</a>
+        <a class="nav-item active" href="documents.html">&#128193; Documents</a>
+        <a class="nav-item" href="monitoring.html">&#128276; Monitoring</a>
+        <a class="nav-item" href="intelligence.html">&#10024; Intelligence</a>
+        <a class="nav-item" href="tasks.html">&#9745; Tasks</a>
+      </nav>
+    </aside>
 
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-left"><strong>Project Arts</strong> &mdash; Ballet &mdash; Documents</div>
-      <div class="topbar-right"><div class="avatar">JB</div></div>
-    </div>
-
-    <div class="content">
-      <!-- Folder Tree -->
-      <div class="folder-panel">
-        <h2>Project Folders</h2>
-        <input type="text" class="search-box" placeholder="Search folders...">
-        <ul class="folder-tree">
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 01 Investment</div></li>
-          <li>
-            <div class="folder active"><span class="chevron">&#9660;</span><span class="icon">&#128194;</span> 02 Model & Budget</div>
-            <ul class="sub">
-              <li><div class="folder"><span class="icon">&#128193;</span> School Submitted Budget</div></li>
-              <li><div class="folder"><span class="icon">&#128193;</span> Archive</div></li>
-            </ul>
-          </li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 03 Gaw Communication</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 04 Gaw Finance & Comsec</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 05 Pitchbook & Marketing</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 08 Receivership</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 09 Takeover Process</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 10 HoldCos</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 11 Schools</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 13 Sunflower</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 14 Tinytots</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 16 Audit Reports</div></li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 17 SG Operations</div></li>
-          <li>
-            <div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 18 SG Finance</div>
-          </li>
-          <li><div class="folder"><span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 22 Sales</div></li>
-        </ul>
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <strong>Project Arts</strong> &mdash; Ballet &mdash; Documents
+        </div>
+        <div class="topbar-right"><div class="avatar">JB</div></div>
       </div>
 
-      <!-- File List -->
-      <div class="file-panel">
-        <div class="file-header">
-          <h2>02 Model & Budget</h2>
-          <div class="breadcrumb">Project Arts &rsaquo; 02 Model & Budget</div>
+      <div class="content">
+        <!-- Folder Tree -->
+        <div class="folder-panel">
+          <h2>Project Folders</h2>
+          <input type="text" class="search-box" placeholder="Search folders..." />
+          <ul class="folder-tree">
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 01
+                Investment
+              </div>
+            </li>
+            <li>
+              <div class="folder active">
+                <span class="chevron">&#9660;</span><span class="icon">&#128194;</span> 02 Model &
+                Budget
+              </div>
+              <ul class="sub">
+                <li>
+                  <div class="folder">
+                    <span class="icon">&#128193;</span> School Submitted Budget
+                  </div>
+                </li>
+                <li>
+                  <div class="folder"><span class="icon">&#128193;</span> Archive</div>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 03 Gaw
+                Communication
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 04 Gaw
+                Finance & Comsec
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 05 Pitchbook
+                & Marketing
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 08
+                Receivership
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 09 Takeover
+                Process
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 10 HoldCos
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 11 Schools
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 13 Sunflower
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 14 Tinytots
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 16 Audit
+                Reports
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 17 SG
+                Operations
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 18 SG
+                Finance
+              </div>
+            </li>
+            <li>
+              <div class="folder">
+                <span class="chevron">&#9654;</span><span class="icon">&#128193;</span> 22 Sales
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="version-banner">
-          <span class="check">&#10003;</span> Ballet UW v5 &mdash; Confirmed current as of Apr 16, 2026 by Lillian Chow
-        </div>
-        <table class="file-table">
-          <thead>
-            <tr><th>Name</th><th>Version</th><th>Status</th><th>Modified</th><th>Modified By</th><th>Size</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Ballet UW v5</div></td>
-              <td>v5</td>
-              <td><span class="fstatus current">Current</span></td>
-              <td>Apr 16</td>
-              <td>Lillian Chow</td>
-              <td>4,452 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Ballet UW v4.8.6 - APPROVED</div></td>
-              <td>v4.8.6</td>
-              <td><span class="fstatus approved">Approved</span></td>
-              <td>Apr 16</td>
-              <td>Lillian Chow</td>
-              <td>4,452 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Ballet UW v4.8.6 - sent to Capital Markets</div></td>
-              <td>v4.8.6</td>
-              <td><span class="fstatus superseded">Superseded</span></td>
-              <td>Apr 14</td>
-              <td>Lillian Chow</td>
-              <td>2,898 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Ballet UW v4.8.5</div></td>
-              <td>v4.8.5</td>
-              <td><span class="fstatus superseded">Superseded</span></td>
-              <td>Apr 2</td>
-              <td>Lillian Chow</td>
-              <td>4,448 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Ballet UW v4.8.3</div></td>
-              <td>v4.8.3</td>
-              <td><span class="fstatus superseded">Superseded</span></td>
-              <td>Apr 1</td>
-              <td>Lillian Chow</td>
-              <td>4,449 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> (DraftResults-v2) GawCapital - SDM</div></td>
-              <td>&mdash;</td>
-              <td><span class="fstatus draft">Draft</span></td>
-              <td>Apr 1</td>
-              <td>James Bradley</td>
-              <td>1,404 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> SF 5 years forecast</div></td>
-              <td>&mdash;</td>
-              <td><span class="fstatus current">Current</span></td>
-              <td>Mar 18</td>
-              <td>Lillian Chow</td>
-              <td>307 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> 2026 forecast</div></td>
-              <td>&mdash;</td>
-              <td><span class="fstatus current">Current</span></td>
-              <td>Jan 7</td>
-              <td>Lillian Chow</td>
-              <td>78 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Capex 2026</div></td>
-              <td>&mdash;</td>
-              <td><span class="fstatus current">Current</span></td>
-              <td>Nov 10</td>
-              <td>Spencer</td>
-              <td>25 KB</td>
-            </tr>
-            <tr>
-              <td><div class="fname"><div class="ficon xls">XLS</div> Budget V2</div></td>
-              <td>V2</td>
-              <td><span class="fstatus current">Current</span></td>
-              <td>Nov 10</td>
-              <td>Spencer</td>
-              <td>42 KB</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
 
-      <!-- Detail Panel -->
-      <div class="detail-panel">
-        <h3>Ballet UW v5</h3>
-        <div class="detail-meta">Microsoft Excel &middot; 4,452 KB</div>
-
-        <div class="detail-section">
-          <div class="label">Sheets</div>
-          <div style="font-size: 12px; color: #4b4b4b; line-height: 1.8;">
-            Front &middot; Consolidated Monthly CF &middot; Returns &middot; DCF &middot; Consolidated Yearly CF &middot; Comps &middot; Schools Monthly CF &middot; Schools Yearly CF &middot; +10 more
+        <!-- File List -->
+        <div class="file-panel">
+          <div class="file-header">
+            <h2>02 Model & Budget</h2>
+            <div class="breadcrumb">Project Arts &rsaquo; 02 Model & Budget</div>
           </div>
+          <div class="version-banner">
+            <span class="check">&#10003;</span> Ballet UW v5 &mdash; Confirmed current as of Apr 16,
+            2026 by Lillian Chow
+          </div>
+          <table class="file-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Status</th>
+                <th>Modified</th>
+                <th>Modified By</th>
+                <th>Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Ballet UW v5
+                  </div>
+                </td>
+                <td>v5</td>
+                <td><span class="fstatus current">Current</span></td>
+                <td>Apr 16</td>
+                <td>Lillian Chow</td>
+                <td>4,452 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Ballet UW v4.8.6 - APPROVED
+                  </div>
+                </td>
+                <td>v4.8.6</td>
+                <td><span class="fstatus approved">Approved</span></td>
+                <td>Apr 16</td>
+                <td>Lillian Chow</td>
+                <td>4,452 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Ballet UW v4.8.6 - sent to Capital Markets
+                  </div>
+                </td>
+                <td>v4.8.6</td>
+                <td><span class="fstatus superseded">Superseded</span></td>
+                <td>Apr 14</td>
+                <td>Lillian Chow</td>
+                <td>2,898 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Ballet UW v4.8.5
+                  </div>
+                </td>
+                <td>v4.8.5</td>
+                <td><span class="fstatus superseded">Superseded</span></td>
+                <td>Apr 2</td>
+                <td>Lillian Chow</td>
+                <td>4,448 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Ballet UW v4.8.3
+                  </div>
+                </td>
+                <td>v4.8.3</td>
+                <td><span class="fstatus superseded">Superseded</span></td>
+                <td>Apr 1</td>
+                <td>Lillian Chow</td>
+                <td>4,449 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    (DraftResults-v2) GawCapital - SDM
+                  </div>
+                </td>
+                <td>&mdash;</td>
+                <td><span class="fstatus draft">Draft</span></td>
+                <td>Apr 1</td>
+                <td>James Bradley</td>
+                <td>1,404 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    SF 5 years forecast
+                  </div>
+                </td>
+                <td>&mdash;</td>
+                <td><span class="fstatus current">Current</span></td>
+                <td>Mar 18</td>
+                <td>Lillian Chow</td>
+                <td>307 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    2026 forecast
+                  </div>
+                </td>
+                <td>&mdash;</td>
+                <td><span class="fstatus current">Current</span></td>
+                <td>Jan 7</td>
+                <td>Lillian Chow</td>
+                <td>78 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Capex 2026
+                  </div>
+                </td>
+                <td>&mdash;</td>
+                <td><span class="fstatus current">Current</span></td>
+                <td>Nov 10</td>
+                <td>Spencer</td>
+                <td>25 KB</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="fname">
+                    <div class="ficon xls">XLS</div>
+                    Budget V2
+                  </div>
+                </td>
+                <td>V2</td>
+                <td><span class="fstatus current">Current</span></td>
+                <td>Nov 10</td>
+                <td>Spencer</td>
+                <td>42 KB</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div class="detail-section">
-          <div class="label">Version History</div>
-          <div class="version-timeline">
-            <div class="vt-item current">
-              <div class="vt-ver">v5</div>
-              <div class="vt-meta">Apr 16, 2026 &middot; Lillian Chow</div>
-            </div>
-            <div class="vt-item">
-              <div class="vt-ver">v4.8.6 — Approved</div>
-              <div class="vt-meta">Apr 16, 2026 &middot; Lillian Chow</div>
-            </div>
-            <div class="vt-item">
-              <div class="vt-ver">v4.8.5</div>
-              <div class="vt-meta">Apr 2, 2026 &middot; Lillian Chow</div>
-            </div>
-            <div class="vt-item">
-              <div class="vt-ver">v4.8.3</div>
-              <div class="vt-meta">Apr 1, 2026 &middot; Lillian Chow</div>
-            </div>
-            <div class="vt-item">
-              <div class="vt-ver">v4.6</div>
-              <div class="vt-meta">Mar 31, 2026 &middot; Lillian Chow</div>
-            </div>
-            <div class="vt-item">
-              <div class="vt-ver">v4.1</div>
-              <div class="vt-meta">Mar 26, 2026 &middot; Lillian Chow</div>
-            </div>
-            <div class="vt-item">
-              <div class="vt-ver">v4</div>
-              <div class="vt-meta">Mar 25, 2026 &middot; Lillian Chow</div>
+        <!-- Detail Panel -->
+        <div class="detail-panel">
+          <h3>Ballet UW v5</h3>
+          <div class="detail-meta">Microsoft Excel &middot; 4,452 KB</div>
+
+          <div class="detail-section">
+            <div class="label">Sheets</div>
+            <div style="font-size: 12px; color: #4b4b4b; line-height: 1.8">
+              Front &middot; Consolidated Monthly CF &middot; Returns &middot; DCF &middot;
+              Consolidated Yearly CF &middot; Comps &middot; Schools Monthly CF &middot; Schools
+              Yearly CF &middot; +10 more
             </div>
           </div>
-        </div>
 
-        <div class="confirm-bar">
-          <div class="q">Is v5 the latest version?</div>
-          <div class="confirm-btns">
-            <button class="btn-yes">&#10003; Yes</button>
-            <button class="btn-no">No</button>
+          <div class="detail-section">
+            <div class="label">Version History</div>
+            <div class="version-timeline">
+              <div class="vt-item current">
+                <div class="vt-ver">v5</div>
+                <div class="vt-meta">Apr 16, 2026 &middot; Lillian Chow</div>
+              </div>
+              <div class="vt-item">
+                <div class="vt-ver">v4.8.6 — Approved</div>
+                <div class="vt-meta">Apr 16, 2026 &middot; Lillian Chow</div>
+              </div>
+              <div class="vt-item">
+                <div class="vt-ver">v4.8.5</div>
+                <div class="vt-meta">Apr 2, 2026 &middot; Lillian Chow</div>
+              </div>
+              <div class="vt-item">
+                <div class="vt-ver">v4.8.3</div>
+                <div class="vt-meta">Apr 1, 2026 &middot; Lillian Chow</div>
+              </div>
+              <div class="vt-item">
+                <div class="vt-ver">v4.6</div>
+                <div class="vt-meta">Mar 31, 2026 &middot; Lillian Chow</div>
+              </div>
+              <div class="vt-item">
+                <div class="vt-ver">v4.1</div>
+                <div class="vt-meta">Mar 26, 2026 &middot; Lillian Chow</div>
+              </div>
+              <div class="vt-item">
+                <div class="vt-ver">v4</div>
+                <div class="vt-meta">Mar 25, 2026 &middot; Lillian Chow</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="confirm-bar">
+            <div class="q">Is v5 the latest version?</div>
+            <div class="confirm-btns">
+              <button class="btn-yes">&#10003; Yes</button>
+              <button class="btn-no">No</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

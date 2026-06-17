@@ -12,6 +12,7 @@
 The current reference project is **"Ballet" / "Project Arts"** — a portfolio of **preschool and childcare companies in Singapore** (Global Tots, Tinytots, Sunflower, SDM entities, Tinkerland, etc.). This is representative of how all Gaw AM projects are managed.
 
 **Key stakeholders:**
+
 - **Asset Managers (daily users)** — junior to mid-level team members doing the execution work
 - **MPs and MDs (senior stakeholders)** — need visibility into current project state without chasing people
 - **External counterparties** — portfolio company teams (e.g., Sharon Chan, Jo Chan) who submit financials and reports
@@ -21,11 +22,12 @@ The current reference project is **"Ballet" / "Project Arts"** — a portfolio o
 
 ## 2. The Three Core Pain Points
 
-*Source: Project Management Prompt v2.docx*
+_Source: Project Management Prompt v2.docx_
 
 ### Pain Point 1: Fragmented Information
 
 The AM team manages multiple projects simultaneously. Each project generates two disconnected streams:
+
 - **Documents**: legal docs, financial models, DD reports, IC memos, monitoring updates
 - **Communications**: emails, decisions, instructions, ad-hoc requests
 
@@ -33,12 +35,12 @@ These live in different places, owned by different people. The **authoritative s
 
 **Four compounding failures:**
 
-| Failure | Description |
-|---------|-------------|
-| **Reconstruction cost** | Re-engaging with a project requires hours of trawling emails, chasing people, re-reading documents before any productive work. Compounds over time and handoffs. |
-| **Junior onboarding friction** | New team members can only learn about a deal through informal knowledge transfer from the senior who owns it. Creates a ceiling on contribution speed. |
-| **Ad-hoc task displacement** | Urgent requests arrive outside any system and default to immediate handling — displacing planned work without any deliberate prioritization. |
-| **MP/MD visibility gap** | Senior stakeholders need current state but the latest version of key documents is wherever the last person saved it. |
+| Failure                        | Description                                                                                                                                                      |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Reconstruction cost**        | Re-engaging with a project requires hours of trawling emails, chasing people, re-reading documents before any productive work. Compounds over time and handoffs. |
+| **Junior onboarding friction** | New team members can only learn about a deal through informal knowledge transfer from the senior who owns it. Creates a ceiling on contribution speed.           |
+| **Ad-hoc task displacement**   | Urgent requests arrive outside any system and default to immediate handling — displacing planned work without any deliberate prioritization.                     |
+| **MP/MD visibility gap**       | Senior stakeholders need current state but the latest version of key documents is wherever the last person saved it.                                             |
 
 ### Pain Point 2: Controlling & Monitoring
 
@@ -46,10 +48,10 @@ Tracking deadlines and progress across all active projects is entirely manual an
 
 **Two failure modes:**
 
-| Failure | Description |
-|---------|-------------|
+| Failure                 | Description                                                                                                                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Monitoring as a tax** | Team members spend material bandwidth on administrative tracking rather than value creation — checking submissions, following up on documents, chasing deadlines. Scales linearly with portfolio size. |
-| **Silent slippage** | Missed/delayed deadlines don't surface until someone happens to look. In PE, information lags have material consequences for asset management decisions. |
+| **Silent slippage**     | Missed/delayed deadlines don't surface until someone happens to look. In PE, information lags have material consequences for asset management decisions.                                               |
 
 ### Pain Point 3: Active Asset Intelligence
 
@@ -57,38 +59,43 @@ The traditional AM function is structurally passive — receive info, monitor ag
 
 **Two failure modes:**
 
-| Failure | Description |
-|---------|-------------|
-| **Insight scarcity** | Strategic analysis is capped by available bandwidth. Potential value creation opportunities (rollup targets, sector tailwinds, competitor moves) may never be considered. |
-| **Lack of first-mover advantage** | Human-paced information processing consistently lags behind systematic scanning and synthesis. |
+| Failure                           | Description                                                                                                                                                               |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Insight scarcity**              | Strategic analysis is capped by available bandwidth. Potential value creation opportunities (rollup targets, sector tailwinds, competitor moves) may never be considered. |
+| **Lack of first-mover advantage** | Human-paced information processing consistently lags behind systematic scanning and synthesis.                                                                            |
 
 ---
 
 ## 3. Proposed Solution Architecture (from prompt doc)
 
 ### Component 1: Structured Document Repository
+
 - Single authoritative project record across entire lifecycle
 - Version control with current-state visibility
 - Principal-visibility layer for MP/MD access
 - Version-stamping + periodic team sign-off (preserves human verification without requiring senior chase)
 
 ### Component 2: Decision & Action Log
+
 - What was decided, by whom, when
 - Reasoning behind key choices preserved and recoverable
 - Makes institutional knowledge explicit (solves junior onboarding)
 
 ### Component 3: Task Ledger
+
 - Absorbs both planned workstreams and ad-hoc items
 - Each ad-hoc item assessed against existing workload before prioritization
 - Prevents automatic displacement of planned work
 
 ### Component 4: Automated Alerts
+
 - Monitors deadlines, task status, and external submission requirements across portfolio
 - Internal: team prompts for approaching deadlines with escalation
 - External: automated reminder emails to portfolio companies when submissions overdue
 - Triggered by absence of expected inputs (not human memory)
 
 ### Component 5: AI Intelligence Layer
+
 - Synthesizes internal project data with external research
 - Organic growth: pricing optimization, expansion opportunities, operational benchmarking
 - Inorganic growth: rollup targets, exit timing, early warning signals
@@ -99,6 +106,7 @@ The traditional AM function is structurally passive — receive info, monitor ag
 ## 4. Current Folder Structure (Real Example: Ballet Drive)
 
 ### Top-Level Project Folder ("Ballet Drive")
+
 This is the centralized folder for the Ballet/Project Arts portfolio:
 
 ```
@@ -125,7 +133,9 @@ This is the centralized folder for the Ballet/Project Arts portfolio:
 ```
 
 ### Folder 02: Model & Budget (Most Used)
+
 Contains the financial underwriting models. Key observations:
+
 - **Heavy versioning**: Ballet UW v1 -> v3.2 -> v4 -> v4.1 -> v4.6 -> v4.8.3 -> v4.8.5 -> v4.8.6 -> v5
 - **Version naming is inconsistent**: "v4.8.6 - APPROVED", "v4.8.6 - sent to Capital Markets"
 - **Multiple related files**: forecasts, budgets, capex, draft results
@@ -133,7 +143,9 @@ Contains the financial underwriting models. Key observations:
 - Contains a "School Submitted Budget" subfolder and "Archive" folder
 
 ### Folder 18: SG Finance (Most Used)
+
 Contains operational finance data from Singapore entities:
+
 ```
 Backup - SG Finance
 Bank
@@ -159,6 +171,7 @@ General_Ledger_Detail (JAN-JUNE 2025) [second instance]
 ```
 
 ### Central Folder (Deal/Investment Structure)
+
 For each deal/investment, there is a standardized folder hierarchy:
 
 ```
@@ -213,23 +226,24 @@ Also at root level:
 
 The UW (underwriting) model is the core analytical artifact. Sheet structure:
 
-| Sheet | Purpose |
-|-------|---------|
-| **Front** | Cover/summary page |
-| **Consolidated Monthly CF** | Monthly cash flows across all entities, SGD-denominated |
-| **Returns** | Project-level IRR/returns: investment inflows, bridge loans, exit proceeds |
-| **DCF** | Discounted cash flow forecast (S&P approach) with WACC calculation |
-| **Consolidated Yearly CF** | Annual roll-up of cash flows |
-| **Comps** | Comparable company analysis (Refinitiv template) — EV/EBITDA, EV/Revenue |
-| **Schools Monthly CF** | Entity-level monthly cash flows for school portfolio |
-| **Schools Yearly CF** | Entity-level annual cash flows — revenue by fee type (infant, childcare, enrichment), grants |
-| **Schools HQ** | Headquarter expense allocation for valuation |
-| **Tinytots Yearly CF** | Tinytots entity annual cash flows |
-| **Sunflower Yrly/Mthly CF** | Sunflower entity cash flows |
-| **SFWT Loan sch** | Sunflower loan schedules |
-| **SF Loan sub-schedules** | Individual property loan details |
+| Sheet                       | Purpose                                                                                      |
+| --------------------------- | -------------------------------------------------------------------------------------------- |
+| **Front**                   | Cover/summary page                                                                           |
+| **Consolidated Monthly CF** | Monthly cash flows across all entities, SGD-denominated                                      |
+| **Returns**                 | Project-level IRR/returns: investment inflows, bridge loans, exit proceeds                   |
+| **DCF**                     | Discounted cash flow forecast (S&P approach) with WACC calculation                           |
+| **Consolidated Yearly CF**  | Annual roll-up of cash flows                                                                 |
+| **Comps**                   | Comparable company analysis (Refinitiv template) — EV/EBITDA, EV/Revenue                     |
+| **Schools Monthly CF**      | Entity-level monthly cash flows for school portfolio                                         |
+| **Schools Yearly CF**       | Entity-level annual cash flows — revenue by fee type (infant, childcare, enrichment), grants |
+| **Schools HQ**              | Headquarter expense allocation for valuation                                                 |
+| **Tinytots Yearly CF**      | Tinytots entity annual cash flows                                                            |
+| **Sunflower Yrly/Mthly CF** | Sunflower entity cash flows                                                                  |
+| **SFWT Loan sch**           | Sunflower loan schedules                                                                     |
+| **SF Loan sub-schedules**   | Individual property loan details                                                             |
 
 **Key financial data points tracked:**
+
 - Revenue by entity and fee type (school fees by segment: infant, childcare, international)
 - Grants (taxable and non-taxable)
 - Capex
@@ -244,11 +258,13 @@ The UW (underwriting) model is the core analytical artifact. Sheet structure:
 Representative of what portfolio companies submit monthly:
 
 **P&L Statement** (monthly columns Jan-Dec 2025):
+
 - Trading Income: School Fees (by segment), Enrichment, Registration, Grants
 - Expenses: Staff costs, rent, utilities, etc.
 - Monthly and YTD totals
 
 **Balance Sheet** (point-in-time):
+
 - Bank balances
 - Current Assets: AR, intercompany balances
 - Fixed Assets
@@ -259,29 +275,34 @@ Representative of what portfolio companies submit monthly:
 ## 7. Dashboard Mockups (from Showcase pptx)
 
 ### Main Dashboard
+
 - **Per-project cards** showing: upcoming tasks with deadlines, category tags (Finance, Lease, MGMT Report), latest email/task status
 - **Cross-project timeline** showing all upcoming tasks in chronological order
 - **Category-based file organization** with tagging (#Finance, #Lease, #Forecast)
 
 ### Monitoring Dashboard
+
 - **File tracker matrix**: rows = document types (e.g., Monthly Management Report), columns = months, cells = received/pending
 - **Automation rules**: "Send reminder email to [person] if file is not received by [date rule]"
 - **Conversation record**: log of automated reminders sent
 - **Links to past files** with metadata (date received, from whom, email link)
 
 ### Document Version Control
+
 - **Version list** with metadata (date, author, source email)
 - **"Is this the latest version?" confirmation** workflow
 - **Auto-save to Central Drive** functionality
 - **AI chat interface**: "Give me the UW model for Project A" -> returns latest confirmed version
 
 ### AI Intelligence
+
 - **Chat interface** connected to project context
 - **Automated prompt scheduling** (e.g., quarterly market research generation)
 - **Research auto-saved** to project folders
 - **Cross-references** internal project status with external market data
 
 ### Additional Functions
+
 - **Translation**: Thai, Arabic, Japanese (languages where Gaw has investments)
 - **File format handling**: PDF, JPEG extraction
 - **NDA and standardized document auto-fill**
@@ -292,24 +313,24 @@ Representative of what portfolio companies submit monthly:
 
 Decisions made 2026-05-12:
 
-| Decision | Answer |
-|----------|--------|
-| **MVP Focus** | Vertical slice across all 3 pain points — go shallow but show the full narrative |
-| **Deliverable Type** | Hybrid — some features working (AI chat), others mocked/simulated |
-| **Primary Audience** | Gaw leadership (MPs/MDs) — realism and relevance to their workflow |
-| **Timeline** | 2-3 days |
-| **Data** | Synthetic but realistic — mirror Ballet structure with anonymized/modified figures |
-| **AI Scope** | Full vision: project data queries + external research + strategic recommendations |
-| **File Source (real world)** | OneDrive/SharePoint |
-| **Tech Stack** | Next.js + Vercel |
-| **Integrations** | Self-contained — no external API dependencies for demo |
-| **Alerts** | Internal team only |
-| **Project Count** | Start with 1, nail the UX, expand later |
-| **Project Model** | Mirror Ballet/Project Arts structure (preschool portfolio in Singapore) |
-| **Demo Takeaway** | "This is the future" — vision-driven, AI intelligence layer is the wow-factor |
-| **Demo Format** | 1-minute video pitch + live demo accessible via password-locked demo account |
-| **Auth** | No real auth — simple password gate to protect core features for demo viewers |
-| **Team** | Jayce (PM) working directly with interns building it — fast feedback cycles |
+| Decision                     | Answer                                                                             |
+| ---------------------------- | ---------------------------------------------------------------------------------- |
+| **MVP Focus**                | Vertical slice across all 3 pain points — go shallow but show the full narrative   |
+| **Deliverable Type**         | Hybrid — some features working (AI chat), others mocked/simulated                  |
+| **Primary Audience**         | Gaw leadership (MPs/MDs) — realism and relevance to their workflow                 |
+| **Timeline**                 | 2-3 days                                                                           |
+| **Data**                     | Synthetic but realistic — mirror Ballet structure with anonymized/modified figures |
+| **AI Scope**                 | Full vision: project data queries + external research + strategic recommendations  |
+| **File Source (real world)** | OneDrive/SharePoint                                                                |
+| **Tech Stack**               | Next.js + Vercel                                                                   |
+| **Integrations**             | Self-contained — no external API dependencies for demo                             |
+| **Alerts**                   | Internal team only                                                                 |
+| **Project Count**            | Start with 1, nail the UX, expand later                                            |
+| **Project Model**            | Mirror Ballet/Project Arts structure (preschool portfolio in Singapore)            |
+| **Demo Takeaway**            | "This is the future" — vision-driven, AI intelligence layer is the wow-factor      |
+| **Demo Format**              | 1-minute video pitch + live demo accessible via password-locked demo account       |
+| **Auth**                     | No real auth — simple password gate to protect core features for demo viewers      |
+| **Team**                     | Jayce (PM) working directly with interns building it — fast feedback cycles        |
 
 ---
 
@@ -320,6 +341,7 @@ Decisions made 2026-05-12:
 A vertical slice through one project (Ballet/Project Arts) demonstrating how all three pain points are solved in a single unified platform. The demo narrative is: **"This is what PE asset management looks like when it's powered by intelligence, not spreadsheets."**
 
 ### Screen 1: Project Dashboard (Pain Point 1 — Fragmented Information)
+
 **What it shows:** Single authoritative view of the Ballet project
 
 - **Project header**: Project Arts / Ballet — Singapore Preschool Portfolio
@@ -330,12 +352,14 @@ A vertical slice through one project (Ballet/Project Arts) demonstrating how all
 - **Decision & action log**: timeline of key decisions with who/when/why
 
 **Working vs. mocked:**
+
 - Folder structure browser: working (navigable)
 - Document metadata and version history: working (from seeded data)
 - Activity feed: seeded/static
 - Decision log: seeded/static
 
 ### Screen 2: Monitoring & Alerts (Pain Point 2 — Controlling & Monitoring)
+
 **What it shows:** Deadline tracking and submission monitoring across the portfolio
 
 - **File tracker matrix**: Monthly Management Reports — rows per entity (Global Tots East Gate, Sunflower, Tinytots, etc.), columns per month, cells showing received/pending/overdue
@@ -344,12 +368,14 @@ A vertical slice through one project (Ballet/Project Arts) demonstrating how all
 - **Task ledger**: planned vs. ad-hoc items with prioritization
 
 **Working vs. mocked:**
+
 - Tracker matrix: working (interactive, status toggleable)
 - Deadline calculations: working (based on seeded date rules)
 - Alert log: seeded/static but realistic
 - Task prioritization: UI works, logic is simulated
 
 ### Screen 3: AI Intelligence (Pain Point 3 — Active Asset Intelligence)
+
 **What it shows:** Chat interface that connects internal project knowledge with external market intelligence
 
 - **Chat interface**: conversational AI that can answer questions like:
@@ -362,6 +388,7 @@ A vertical slice through one project (Ballet/Project Arts) demonstrating how all
 - **Research output cards**: pre-generated insight cards that look like AI-generated research saved to the project
 
 **Working vs. mocked:**
+
 - Chat interface: working UI with pre-seeded responses for key queries (no live AI API in demo)
 - Prompt scheduling: UI only
 - Research cards: seeded/static
@@ -414,4 +441,4 @@ Next.js 15 (App Router)
 
 ---
 
-*Next step: Begin building. Start with the data model and seed data, then screens in order.*
+_Next step: Begin building. Start with the data model and seed data, then screens in order._
