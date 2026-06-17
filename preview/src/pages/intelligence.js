@@ -110,28 +110,13 @@ export function intelligencePage() {
   return `
     <div class="content no-pad">
       <div class="intel-layout">
-        <div class="chat-panel">
-          <div class="chat-context">
-            <div class="dot"></div>
-            <div class="clabel">Connected to:</div>
-            <div class="tags">
-              <span class="tag">Project Arts — Ballet</span>
-              <span class="tag">UW Model v5</span>
-              <span class="tag">Mgmt Accounts (Dec 2025)</span>
-              <span class="tag">Monitoring Data</span>
-              <span class="tag refinitiv">Refinitiv</span>
-            </div>
-          </div>
-          <div class="chat-messages" id="chat-messages">${renderMessages()}</div>
-          <div class="suggested" id="suggested-prompts">
-            ${suggestedPrompts.filter(p => !messages.find(m => m.text === presetResponses[p.key]?.q)).map(p =>
-              `<div class="suggested-chip" data-key="${p.key}">${p.label}</div>`
-            ).join('')}
-          </div>
-          <div class="chat-input-area">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Ask about Project Arts...">
-            <button class="send-btn" id="send-btn">${i.send}</button>
-          </div>
+        <div class="chat-panel" style="padding:0;overflow:hidden;">
+          <iframe
+            src="http://gc-dify-poc.eastasia.cloudapp.azure.com/chatbot/DttT8oSIyy7MTCzt"
+            style="width:100%;height:100%;border:none;"
+            frameborder="0"
+            allow="microphone">
+          </iframe>
         </div>
         ${renderResearchPanel()}
       </div>
