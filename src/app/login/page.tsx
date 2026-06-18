@@ -68,7 +68,7 @@ export default function LoginPage() {
         <div className="login-error" style={{ display: showError ? "block" : "none" }}>
           Invalid access code. Please try again.
         </div>
-        <div className="footer-text">Gaw Capital Partners - Hackathon 2026</div>
+        <div className="footer-text">Gaw Capital Partners &middot; Hackathon 2026</div>
       </div>
     </div>
   );

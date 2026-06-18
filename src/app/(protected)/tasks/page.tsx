@@ -151,6 +151,8 @@ export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>(seedTasks);
   const [viewMode, setViewMode] = useState<"board" | "list" | "workload">("board");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [draggingTaskId, setDraggingTaskId] = useState<number | null>(null);
+  const [dragTargetStatus, setDragTargetStatus] = useState<TaskStatus | null>(null);
   const [title, setTitle] = useState("");
   const [pri, setPri] = useState<Task["pri"]>("p2");
   const [source, setSource] = useState<Task["source"]>("planned");
@@ -187,6 +189,18 @@ export default function TasksPage() {
     ]);
     setShowAddModal(false);
     setTitle("");
+  };
+
+  const draggingTask = useMemo(
+    () => tasks.find((task) => task.id === draggingTaskId) ?? null,
+    [tasks, draggingTaskId],
+  );
+
+  const onDropToColumn = (nextStatus: TaskStatus) => {
+    if (draggingTaskId === null) return;
+    moveTask(draggingTaskId, nextStatus);
+    setDraggingTaskId(null);
+    setDragTargetStatus(null);
   };
 
   return (
@@ -257,7 +271,49 @@ export default function TasksPage() {
                   {tasks.filter((task) => task.status === column.key).length}
                 </div>
               </div>
-              <div className="col-cards" data-col={column.key}>
+              <div
+                className="col-cards"
+                data-col={column.key}
+                onDragLeave={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                    setDragTargetStatus((current) => (current === column.key ? null : current));
+                  }
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  setDragTargetStatus(column.key);
+                }}
+                onDrop={() => onDropToColumn(column.key)}
+              >
+                {draggingTask &&
+                dragTargetStatus === column.key &&
+                draggingTask.status !== column.key ? (
+                  <div
+                    className="task-card"
+                    style={{
+                      borderStyle: "dashed",
+                      borderColor: "#b12b35",
+                      background: "#fef6f7",
+                      opacity: 0.85,
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <div className="tc-top">
+                      <span className={`priority ${draggingTask.pri}`}>
+                        {draggingTask.pri.toUpperCase()}
+                      </span>
+                      <span className={`status-badge ${draggingTask.source}`}>
+                        {draggingTask.source === "adhoc" ? "Ad-hoc" : "Planned"}
+                      </span>
+                    </div>
+                    <div className="tc-title">{draggingTask.title}</div>
+                    <div className="tc-category">{draggingTask.cat}</div>
+                    <div className="tc-footer">
+                      <span className="tc-due">Drop to move to {column.label}</span>
+                      <span className="tc-assignee">{draggingTask.assignee}</span>
+                    </div>
+                  </div>
+                ) : null}
                 {tasks
                   .filter((task) => task.status === column.key)
                   .map((task) => (
@@ -265,6 +321,15 @@ export default function TasksPage() {
                       key={task.id}
                       className={`task-card ${task.status === "done" ? "done" : ""}`}
                       data-id={task.id}
+                      draggable={task.status !== "done"}
+                      onDragEnd={() => {
+                        setDraggingTaskId(null);
+                        setDragTargetStatus(null);
+                      }}
+                      onDragStart={() => {
+                        setDraggingTaskId(task.id);
+                        setDragTargetStatus(null);
+                      }}
                     >
                       <div className="tc-top">
                         <span className={`priority ${task.pri}`}>{task.pri.toUpperCase()}</span>

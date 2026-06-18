@@ -26,7 +26,7 @@ type VersionEntry = {
   current?: boolean;
 };
 
-const folders: Record<string, FolderEntry> = {
+const baseFolders: Record<string, FolderEntry> = {
   "01": {
     name: "01 Investment",
     files: [
@@ -285,6 +285,52 @@ const allFolders: FolderNavItem[] = [
   { id: "22", name: "22 Sales" },
 ];
 
+function createDemoFiles(folderName: string): FileEntry[] {
+  return [
+    {
+      name: `${folderName} - Master File`,
+      ver: "v1.0",
+      status: "current",
+      st: "Current",
+      date: "May 14",
+      by: "James Bradley",
+      size: "684 KB",
+      icon: "xls",
+    },
+    {
+      name: `${folderName} - Supporting Docs`,
+      ver: "v0.9",
+      status: "pending",
+      st: "Pending",
+      date: "May 9",
+      by: "Spencer",
+      size: "1,126 KB",
+      icon: "pdf",
+    },
+    {
+      name: `${folderName} - Archive Snapshot`,
+      ver: "v0.8",
+      status: "superseded",
+      st: "Superseded",
+      date: "Apr 28",
+      by: "Lillian Chow",
+      size: "452 KB",
+      icon: "pdf",
+    },
+  ];
+}
+
+const folders: Record<string, FolderEntry> = allFolders.reduce(
+  (accumulator, folder) => {
+    accumulator[folder.id] = baseFolders[folder.id] ?? {
+      name: folder.name,
+      files: createDemoFiles(folder.name),
+    };
+    return accumulator;
+  },
+  {} as Record<string, FolderEntry>,
+);
+
 const fileDetails: Record<string, { sheets: string; versions: VersionEntry[] }> = {
   "Ballet UW v5": {
     sheets:
@@ -344,11 +390,9 @@ export default function DocumentsPage() {
                     className={`folder ${isActive ? "active" : ""}`}
                     data-folder={folder.id}
                     onClick={() => {
-                      if (folders[folder.id]) {
-                        setActiveFolder(folder.id);
-                        setSelectedFile(folders[folder.id].files[0]?.name ?? "");
-                        setConfirmState("none");
-                      }
+                      setActiveFolder(folder.id);
+                      setSelectedFile(folders[folder.id].files[0]?.name ?? "");
+                      setConfirmState("none");
                     }}
                     type="button"
                   >
