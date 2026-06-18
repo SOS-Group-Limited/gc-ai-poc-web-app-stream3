@@ -50,7 +50,7 @@ export default function IntelligencePage() {
           <iframe
             allow="microphone"
             frameBorder="0"
-            src="http://gc-dify-poc.eastasia.cloudapp.azure.com/chatbot/DttT8oSIyy7MTCzt"
+            src="https://gc-dify-poc.eastasia.cloudapp.azure.com/chatbot/DttT8oSIyy7MTCzt"
             style={{ width: "100%", height: "100%", border: "none" }}
             title="Dify Intelligence"
           />
